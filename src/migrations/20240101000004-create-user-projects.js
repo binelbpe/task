@@ -42,7 +42,7 @@ module.exports = {
       },
     });
 
-    // Add unique constraint to prevent duplicate user-project associations
+  
     await queryInterface.addConstraint("UserProjects", {
       fields: ["userId", "projectId"],
       type: "unique",
