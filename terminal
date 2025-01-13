@@ -1,0 +1,12 @@
+mkdir project-management-api
+cd project-management-api
+npm init -y
+npm install express sequelize pg pg-hstore jsonwebtoken bcryptjs cors dotenv swagger-ui-express yamljs
+npm install --save-dev nodemon sequelize-cli 
+mkdir src
+mkdir src/models
+mkdir src/controllers
+mkdir src/middlewares
+mkdir src/routes
+mkdir src/config
+mkdir src/docs 
