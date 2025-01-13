@@ -3,18 +3,15 @@ const { sequelize } = require("./models");
 const app = require("./app");
 const logger = require('./utils/logger');
 
-process.on('uncaughtException', (error) => {
-  logger.error('Uncaught Exception:', error);
-  process.exit(1);
-});
+const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
     await sequelize.authenticate();
     logger.info("Database connected successfully");
 
-    app.listen(process.env.PORT || 3000, () => {
-      logger.info(`Server running on port ${process.env.PORT || 3000}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is running on port ${PORT}`);
     });
   } catch (error) {
     logger.error('Server startup error:', error);
@@ -22,7 +19,4 @@ async function startServer() {
   }
 }
 
-startServer().catch((error) => {
-  logger.error('Failed to start server:', error);
-  process.exit(1);
-});
+startServer();

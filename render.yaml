@@ -2,7 +2,6 @@ services:
   - type: web
     name: project-management-api
     env: node
-    nodeVersion: 18.17.1
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -13,4 +12,6 @@ services:
           name: project-management-db
           property: connectionString
       - key: JWT_SECRET
-        generateValue: true 
+        generateValue: true
+    healthCheckPath: /health
+    autoDeploy: true 
