@@ -4,7 +4,7 @@ services:
     env: node
     buildCommand: |
       npm ci
-      npx sequelize-cli db:migrate:undo:all --env production
+      npx sequelize-cli db:migrate:undo:all --env production --debug
       npx sequelize-cli db:migrate --env production --debug
     startCommand: npm start
     envVars:
