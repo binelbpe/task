@@ -2,7 +2,7 @@ services:
   - type: web
     name: project-management-api
     env: node
-    buildCommand: npm ci && npx sequelize-cli db:migrate
+    buildCommand: npm ci && npm run db:setup
     startCommand: npm start
     envVars:
       - key: NODE_ENV

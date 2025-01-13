@@ -4,17 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
     static associate(models) {
       Project.belongsToMany(models.User, {
-        through: "UserProjects",
+        through: "user_projects",
         as: "users",
         foreignKey: "projectId",
-      });
-      Project.hasMany(models.Task, {
-        foreignKey: "projectId",
-        as: "tasks",
-      });
-      Project.belongsTo(models.User, {
-        foreignKey: "ownerId",
-        as: "owner",
       });
     }
   }
@@ -33,22 +25,19 @@ module.exports = (sequelize, DataTypes) => {
       description: {
         type: DataTypes.TEXT,
       },
-      ownerId: {
+      userId: {
         type: DataTypes.UUID,
-        allowNull: false,
         references: {
-          model: "Users",
-          key: "id",
-        },
-      },
-      status: {
-        type: DataTypes.ENUM("active", "completed", "on-hold"),
-        defaultValue: "active",
-      },
+          model: 'users',
+          key: 'id'
+        }
+      }
     },
     {
       sequelize,
       modelName: "Project",
+      tableName: "projects",
+      timestamps: true,
     }
   );
 

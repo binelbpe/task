@@ -2,23 +2,25 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("projects", {
+    await queryInterface.createTable("user_projects", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.TEXT,
-      },
       userId: {
         type: Sequelize.UUID,
         references: {
           model: 'users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      projectId: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'projects',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -35,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("projects");
+    await queryInterface.dropTable("user_projects");
   },
-};
+}; 
