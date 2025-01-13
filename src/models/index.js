@@ -8,29 +8,37 @@ const config = require("../config/config.js")[env];
 const db = {};
 
 let sequelize;
-if (env === "production") {
-  console.log('Database URL:', process.env.DATABASE_URL ? 'Set' : 'Not set');
-  
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
-    protocol: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
-    logging: console.log
-  });
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
+try {
+  if (env === "production") {
+    sequelize = new Sequelize({
+      dialect: 'postgres',
+      host: 'dpg-cu2fkr52ng1s7381l84g-a.singapore-postgres.render.com',
+      port: 5432,
+      database: 'project_management_1u0f',
+      username: 'project_management_1u0f_user',
+      password: 'en1hTRzQBhOUmY1fJ2OfO0DmvvsMJxVL',
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      },
+      logging: false
+    });
+  } else {
+    sequelize = new Sequelize(
+      config.database,
+      config.username,
+      config.password,
+      config
+    );
+  }
+} catch (error) {
+  console.error('Sequelize initialization error:', error);
+  throw error;
 }
 
+// Test connection
 sequelize
   .authenticate()
   .then(() => {

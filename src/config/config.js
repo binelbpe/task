@@ -10,13 +10,16 @@ module.exports = {
   },
   production: {
     dialect: "postgres",
-    protocol: "postgres",
+    host: 'dpg-cu2fkr52ng1s7381l84g-a.singapore-postgres.render.com',
+    port: 5432,
+    database: 'project_management_1u0f',
+    username: 'project_management_1u0f_user',
+    password: 'en1hTRzQBhOUmY1fJ2OfO0DmvvsMJxVL',
     dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: false
       }
-    },
-    use_env_variable: "DATABASE_URL"
+    }
   }
 };
