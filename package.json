@@ -23,6 +23,7 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",
     "swagger-ui-express": "^4.6.3",
+    "winston": "^3.17.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
