@@ -13,5 +13,4 @@ services:
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
-    healthCheckPath: /health
-    autoDeploy: true 
+    healthCheckPath: /health 

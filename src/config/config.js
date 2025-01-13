@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const config = {
+module.exports = {
   development: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
@@ -9,8 +9,8 @@ const config = {
     dialect: "postgres"
   },
   production: {
-    dialect: "postgres",
     url: process.env.DATABASE_URL,
+    dialect: "postgres",
     dialectOptions: {
       ssl: {
         require: true,
@@ -19,5 +19,3 @@ const config = {
     }
   }
 };
-
-module.exports = config;
