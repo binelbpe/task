@@ -14,9 +14,9 @@ services:
       - key: JWT_SECRET
         generateValue: true
     healthCheckPath: /health
-    autoDeploy: false
 
 databases:
   - name: project-management-db
     databaseName: project_management
-    plan: free 
+    plan: free
+    ipAllowList: [] 
