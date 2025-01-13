@@ -18,6 +18,11 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/projects", require("./routes/projectRoutes"));
 app.use("/api/tasks", require("./routes/taskRoutes"));
 
+// Add this before your routes
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   logger.error('Error:', {

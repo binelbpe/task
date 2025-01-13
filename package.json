@@ -4,7 +4,7 @@
   "description": "Project Management System API",
   "scripts": {
     "postbuild": "npm run db:migrate",
-    "start": "node src/server.js",
+    "start": "node --trace-warnings src/server.js",
     "build": "npm install",
     "dev": "nodemon src/server.js",
     "db:migrate": "sequelize-cli db:migrate --config src/config/config.js --migrations-path src/migrations",
@@ -37,6 +37,6 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.x"
   }
 }
