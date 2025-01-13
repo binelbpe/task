@@ -4,8 +4,15 @@ services:
     env: node
     buildCommand: |
       npm ci
-      npx sequelize-cli db:migrate:undo:all --env production --debug
-      npx sequelize-cli db:migrate --env production --debug
+      echo "Current directory: $(pwd)"
+      echo "Listing migrations:"
+      ls -la src/migrations
+      echo "Database configuration:"
+      node -e "console.log(require('./src/config/config.js').production)"
+      echo "Running migrations..."
+      NODE_ENV=production npx sequelize-cli db:migrate:status
+      NODE_ENV=production npx sequelize-cli db:migrate:undo:all --debug
+      NODE_ENV=production npx sequelize-cli db:migrate --debug
     startCommand: npm start
     envVars:
       - key: NODE_ENV

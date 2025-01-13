@@ -4,9 +4,9 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "build": "npm ci && npx sequelize-cli db:migrate:undo:all --env production && npx sequelize-cli db:migrate --env production",
+    "build": "npm ci",
     "dev": "nodemon src/server.js",
-    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate": "sequelize-cli db:migrate --debug",
     "db:seed": "sequelize-cli db:seed:all"
   },
   "dependencies": {

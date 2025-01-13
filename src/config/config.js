@@ -1,12 +1,12 @@
 require("dotenv").config();
 
-module.exports = {
+const config = {
   development: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: "postgres"
+    dialect: "postgres",
   },
   production: {
     username: process.env.DB_USERNAME,
@@ -18,15 +18,24 @@ module.exports = {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
+        rejectUnauthorized: false,
+      },
     },
     pool: {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000
+      idle: 10000,
     },
-    logging: console.log
-  }
+    logging: (...msg) => console.log(msg),
+  },
 };
+
+// Add logging to check configuration loading
+console.log("Current environment:", process.env.NODE_ENV);
+console.log(
+  "Database configuration:",
+  JSON.stringify(config[process.env.NODE_ENV || "development"], null, 2)
+);
+
+module.exports = config;
