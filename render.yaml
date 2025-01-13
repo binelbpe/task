@@ -2,7 +2,7 @@ services:
   - type: web
     name: project-management-api
     env: node
-    buildCommand: npm run build
+    buildCommand: npm ci && npx sequelize-cli db:migrate
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -20,7 +20,6 @@ services:
       - key: PORT
         value: 10000
     healthCheckPath: /health
-    buildCommand: npm ci && npx sequelize-cli db:migrate
 
 databases:
   - name: project-management-db

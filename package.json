@@ -4,9 +4,10 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "build": "npm ci && npx sequelize-cli db:migrate",
+    "build": "npm ci",
+    "postbuild": "npx sequelize-cli db:migrate --env production",
     "dev": "nodemon src/server.js",
-    "db:migrate": "sequelize-cli db:migrate --config src/config/config.js --migrations-path src/migrations",
+    "db:migrate": "sequelize-cli db:migrate",
     "db:seed": "sequelize-cli db:seed:all"
   },
   "dependencies": {
@@ -22,8 +23,7 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22",
-    "sequelize-cli": "^6.6.0"
+    "nodemon": "^2.0.22"
   },
   "engines": {
     "node": "18.17.1"
