@@ -9,14 +9,18 @@ const db = {};
 
 let sequelize;
 if (env === "production") {
+  console.log('Database URL:', process.env.DATABASE_URL ? 'Set' : 'Not set');
+  
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
+    protocol: "postgres",
     dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: false
       }
-    }
+    },
+    logging: console.log
   });
 } else {
   sequelize = new Sequelize(
@@ -26,6 +30,15 @@ if (env === "production") {
     config
   );
 }
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 fs.readdirSync(__dirname)
   .filter((file) => {
