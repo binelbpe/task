@@ -2,7 +2,10 @@ services:
   - type: web
     name: project-management-api
     env: node
-    buildCommand: npm ci && npm run db:setup
+    buildCommand: |
+      npm ci
+      npx sequelize-cli db:migrate:undo:all --env production
+      npx sequelize-cli db:migrate --env production --debug
     startCommand: npm start
     envVars:
       - key: NODE_ENV
