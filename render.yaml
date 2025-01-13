@@ -17,6 +17,8 @@ services:
         value: project_management_1u0f
       - key: DB_HOST
         value: dpg-cu2fkr52ng1s7381l84g-a.singapore-postgres.render.com
+      - key: PORT
+        value: 10000
     healthCheckPath: /health
 
 databases:
