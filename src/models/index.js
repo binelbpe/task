@@ -8,43 +8,16 @@ const config = require("../config/config.js")[env];
 const db = {};
 
 let sequelize;
-try {
-  if (env === 'production') {
-    sequelize = new Sequelize(
-      config.database,
-      config.username,
-      config.password,
-      {
-        host: config.host,
-        port: config.port,
-        dialect: config.dialect,
-        dialectOptions: config.dialectOptions,
-        pool: config.pool,
-        logging: false
-      }
-    );
-  } else {
-    sequelize = new Sequelize(
-      config.database,
-      config.username,
-      config.password,
-      config
-    );
-  }
-} catch (error) {
-  console.error('Sequelize initialization error:', error);
-  throw error;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
 }
-
-// Test connection
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Database connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
 
 fs.readdirSync(__dirname)
   .filter((file) => {

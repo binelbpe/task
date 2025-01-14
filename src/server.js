@@ -1,23 +1,25 @@
 require("dotenv").config();
-const { sequelize } = require("./models");
+
+const { sequelize, User } = require("./models");
 const app = require("./app");
-const logger = require("./utils/logger");
+
+async function testDatabaseConnection() {
+  try {
+    await sequelize.authenticate();
+    console.log("Database connected successfully");
+
+    // Test User model
+    const users = await User.findAll();
+    console.log("Users in database:", users.length);
+  } catch (err) {
+    console.error("Database connection error:", err);
+  }
+}
+
+testDatabaseConnection();
 
 const PORT = process.env.PORT || 3000;
 
-const startServer = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Database connection established.");
-    console.log("Environment:", process.env.NODE_ENV);
-
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Unable to start server:", error);
-    process.exit(1);
-  }
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

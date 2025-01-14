@@ -48,8 +48,6 @@ module.exports = (sequelize, DataTypes) => {
           user.password = await bcrypt.hash(user.password, 10);
         },
       },
-      tableName: 'users',
-      timestamps: true,
     }
   );
 
