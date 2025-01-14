@@ -4,8 +4,9 @@
   "description": "Project Management System API",
   "scripts": {
     "start": "node src/server.js",
+    "build": "npm ci",
     "dev": "nodemon src/server.js",
-    "db:migrate": "sequelize-cli db:migrate --config src/config/config.js --migrations-path src/migrations",
+    "db:migrate": "sequelize-cli db:migrate --debug",
     "db:migrate:undo": "sequelize-cli db:migrate:undo",
     "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
     "db:seed": "sequelize-cli db:seed:all",

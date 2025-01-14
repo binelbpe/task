@@ -1,1 +1,38 @@
- 
+services:
+  - type: web
+    name: project-management-api
+    env: node
+    buildCommand: |
+      npm ci
+      echo "Current directory: $(pwd)"
+      echo "Listing migrations:"
+      ls -la src/migrations
+      echo "Database configuration:"
+      node -e "console.log(require('./src/config/config.js').production)"
+      echo "Running migrations..."
+      NODE_ENV=production npx sequelize-cli db:migrate:status
+      NODE_ENV=production npx sequelize-cli db:migrate:undo:all --debug
+      NODE_ENV=production npx sequelize-cli db:migrate --debug
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_USERNAME
+        value: project_management_1u0f_user
+      - key: DB_PASSWORD
+        value: en1hTRzQBhOUmY1fJ2OfO0DmvvsMJxVL
+      - key: DB_NAME
+        value: project_management_1u0f
+      - key: DB_HOST
+        value: dpg-cu2fkr52ng1s7381l84g-a.singapore-postgres.render.com
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health
+
+databases:
+  - name: project-management-db
+    databaseName: project_management_1u0f
+    plan: free
+    ipAllowList: []

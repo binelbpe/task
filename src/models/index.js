@@ -8,15 +8,32 @@ const config = require("../config/config.js")[env];
 const db = {};
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
+try {
+  if (env === 'production') {
+    sequelize = new Sequelize(
+      config.database,
+      config.username,
+      config.password,
+      {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect,
+        dialectOptions: config.dialectOptions,
+        pool: config.pool,
+        logging: false
+      }
+    );
+  } else {
+    sequelize = new Sequelize(
+      config.database,
+      config.username,
+      config.password,
+      config
+    );
+  }
+} catch (error) {
+  console.error('Sequelize initialization error:', error);
+  throw error;
 }
 
 fs.readdirSync(__dirname)

@@ -2,21 +2,8 @@ const { Model } = require("sequelize");
 const bcrypt = require("bcryptjs");
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      User.belongsToMany(models.Project, {
-        through: "UserProjects",
-        as: "projects",
-        foreignKey: "userId",
-      });
-    }
-
-    async validatePassword(password) {
-      return bcrypt.compare(password, this.password);
-    }
-  }
-
-  User.init(
+  const User = sequelize.define(
+    "User",
     {
       id: {
         type: DataTypes.UUID,
@@ -31,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          isEmail: true,
-        },
       },
       password: {
         type: DataTypes.STRING,
@@ -41,15 +25,26 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      sequelize,
-      modelName: "User",
-      hooks: {
-        beforeCreate: async (user) => {
-          user.password = await bcrypt.hash(user.password, 10);
-        },
-      },
+      tableName: 'users',
+      timestamps: true,
     }
   );
+
+  User.associate = (models) => {
+    User.belongsToMany(models.Project, {
+      through: "UserProjects",
+      as: "projects",
+      foreignKey: "userId",
+    });
+  };
+
+  User.validatePassword = async (password) => {
+    return bcrypt.compare(password, this.password);
+  };
+
+  User.beforeCreate(async (user) => {
+    user.password = await bcrypt.hash(user.password, 10);
+  });
 
   return User;
 };

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Projects", {
+    await queryInterface.createTable("projects", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -15,19 +15,14 @@ module.exports = {
       description: {
         type: Sequelize.TEXT,
       },
-      ownerId: {
+      userId: {
         type: Sequelize.UUID,
-        allowNull: false,
         references: {
-          model: "Users",
-          key: "id",
+          model: 'users',
+          key: 'id',
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      status: {
-        type: Sequelize.ENUM("active", "completed", "on-hold"),
-        defaultValue: "active",
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +35,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Projects");
+    await queryInterface.dropTable("projects");
   },
 };

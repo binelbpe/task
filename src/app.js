@@ -15,6 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 const swaggerDocument = YAML.load(path.join(__dirname, "./docs/swagger.yaml"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Add this before your routes
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/projects", require("./routes/projectRoutes"));
